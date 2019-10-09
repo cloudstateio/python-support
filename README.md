@@ -1,2 +1,2 @@
-# cloudstate_python-support
-Python support for CloudState
+# python-support
+Python support for [CloudState](https://github.com/cloudstateio/cloudstate)
