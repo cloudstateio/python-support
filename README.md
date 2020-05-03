@@ -45,10 +45,11 @@ Add this section to the TCK configuration to the end of it
     hostname = "127.0.0.1"
     port = 50051
     directory = ${user.dir}
-    command = ["./cs_env/bin/python3", "<path_to>/cloudstate_python-support/cloud_state.py"]
+    command = ["./cs_env/bin/python3", "<path_to>/cloudstate_python-support/shoppingcart/shopping_cart.py"]
     env-vars {
       HOST = "127.0.0.1"
       PORT = "50051"
+      PYTHONPATH = "<path_to>/cloudstate_python-support"
     }
   }
 }
