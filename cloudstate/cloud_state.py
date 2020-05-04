@@ -1,4 +1,4 @@
-from dataclasses import (dataclass,field)
+from dataclasses import (dataclass, field)
 from typing import List
 import os
 
@@ -10,11 +10,12 @@ from cloudstate.discovery_servicer import CloudStateEntityDiscoveryServicer
 from cloudstate.entity_pb2_grpc import add_EntityDiscoveryServicer_to_server
 from pprint import pprint
 
-@dataclass
-class CloudState():
-    event_sourced_entities: List[EventSourcedEntity]=field(default_factory=list)
 
-    def registerEventSourcedEntity(self,entity:EventSourcedEntity):
+@dataclass
+class CloudState:
+    event_sourced_entities: List[EventSourcedEntity] = field(default_factory=list)
+
+    def register_event_sourced_entity(self, entity: EventSourcedEntity):
         self.event_sourced_entities.append(entity)
         return self
 

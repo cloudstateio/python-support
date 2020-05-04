@@ -24,6 +24,7 @@ from cloudstate import entity_pb2
 from cloudstate.entity_pb2_grpc import EntityDiscoveryServicer
 from cloudstate.event_sourced_entity import EventSourcedEntity
 
+
 @dataclass
 class CloudStateEntityDiscoveryServicer(EntityDiscoveryServicer):
     event_sourced_entities: List[EventSourcedEntity]
@@ -52,7 +53,8 @@ class CloudStateEntityDiscoveryServicer(EntityDiscoveryServicer):
         spec = entity_pb2.EntitySpec(
             service_info=entity_pb2.ServiceInfo(
                 service_version='0.1.0',
-                service_runtime='Python ' + platform.python_version() + ' [' + platform.python_implementation() + ' ' + platform.python_compiler() + ']',
+                service_runtime='Python ' + platform.python_version() + ' [' + platform.python_implementation() + ' ' +
+                                platform.python_compiler() + ']',
                 support_library_name='cloudstate-python-support',
                 support_library_version='0.1.0'
             ),
