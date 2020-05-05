@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
+from google.protobuf.any_pb2 import Any
+
 from cloudstate.entity_pb2 import Command
 from cloudstate.event_sourced_context import SnapshotContext, EventSourcedCommandContext, EventContext
 from cloudstate.event_sourced_entity import EventSourcedEntity, EventSourcedHandler
@@ -24,6 +26,13 @@ def get_payload(command):
     cmd = command_class()
     cmd.ParseFromString(command.payload.value)
     return cmd
+
+
+def pack(event):
+    any = Any()
+    any.Pack(event)
+    return any
+
 
 class CloudStateEventSourcedServicer(EventSourcedServicer):
     def __init__(self,event_sourced_entities: List[EventSourcedEntity]):
@@ -50,7 +59,7 @@ class CloudStateEventSourcedServicer(EventSourcedServicer):
                     if init.HasField('snapshot'):
                         event_sourced_snapshot:EventSourcedSnapshot= init.snapshot
                         start_sequence_number = event_sourced_snapshot.snapshot_sequence
-                        snapshot = event_sourced_snapshot.snapshot
+                        snapshot = get_payload(event_sourced_snapshot.snapshot)
                         snapshot_context = SnapshotContext(entity_id,start_sequence_number)
                         snapshot_result = handler.handle_snapshot(current_state,snapshot,snapshot_context)
                         if snapshot_result:
@@ -78,10 +87,10 @@ class CloudStateEventSourcedServicer(EventSourcedServicer):
                     ctx.fail(str(ex))
                     logging.error('Failed to execute command:'+str(ex))
 
-                client_action = context.createClientAction(result, False)
+                client_action = ctx.create_client_action(result, False)
                 event_sourced_reply = EventSourcedReply()
                 event_sourced_reply.command_id = command.id
-                event_sourced_reply.client_action = client_action
+                event_sourced_reply.client_action.CopyFrom(client_action)
                 snapshot = None
                 perform_snapshot=False
                 if not ctx.has_errors():
@@ -97,12 +106,13 @@ class CloudStateEventSourcedServicer(EventSourcedServicer):
                     if perform_snapshot:
                         snapshot = handler.snapshot(current_state,SnapshotContext(entity_id,end_sequence_number))
 
-                    event_sourced_reply.side_effects=ctx.effects
-                    event_sourced_reply.events = ctx.events
-                    event_sourced_reply.snapshot = snapshot
+                    event_sourced_reply.side_effects.extend(ctx.effects)
+                    event_sourced_reply.events.extend([pack(event)  for event in ctx.events])
+                    if snapshot:
+                        event_sourced_reply.snapshot.Pack(snapshot)
 
                 output = EventSourcedStreamOut()
-                output.reply = event_sourced_reply
+                output.reply.CopyFrom(event_sourced_reply)
                 yield output
 
             else:

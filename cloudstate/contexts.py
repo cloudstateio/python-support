@@ -26,22 +26,22 @@ class ClientActionContext(Context):
     def has_errors(self):
         return len(self.errors) > 0
 
-    def createClientAction(self, result, allow_reply):
+    def create_client_action(self, result, allow_reply):
         client_action = ClientAction()
         if self.has_errors():
-            failure = Failure
+            failure = Failure()
             failure.command_id = self.command_id
             failure.description = str(self.errors)
-            client_action.failure = failure
+            client_action.failure.CopyFrom(failure)
         elif result:
             if self.forward:
                 raise Exception("Both a reply was returned, and a forward message was sent, choose one or the other.")
             else:
                 reply = Reply()
-                reply.payload = result
-                client_action.reply = reply
+                reply.payload.Pack(result)
+                client_action.reply.CopyFrom(reply)
         elif self.forward:
-            client_action.forward = self.forward
+            client_action.forward.CopyFrom(self.forward)
         elif allow_reply:
             return None
         else:

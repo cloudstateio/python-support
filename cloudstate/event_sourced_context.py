@@ -2,6 +2,8 @@ from dataclasses import dataclass, field
 from typing import List, Any
 
 from cloudstate.contexts import ClientActionContext
+from cloudstate.entity_pb2 import Forward, SideEffect
+
 
 @dataclass
 class EventSourcedCommandContext(ClientActionContext):
@@ -14,6 +16,9 @@ class EventSourcedCommandContext(ClientActionContext):
     entity_id:str
     sequence:int
     events:List[Any]=field(default_factory=list)
+    errors: List[str] = field(default_factory=list)
+    effects: List[SideEffect] = field(default_factory=list)
+    forward: Forward = None
 
 
     def emit(self, event):

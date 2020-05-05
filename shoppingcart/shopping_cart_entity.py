@@ -70,7 +70,7 @@ def item_removed(state: ShoppingCartState, event: ItemRemoved):
 @entity.command_handler("GetCart")
 def get_cart(state: ShoppingCartState):
     cart = Cart()
-    cart.items = state.cart.values()
+    cart.items.extend(state.cart.values())
     return cart
 
 
