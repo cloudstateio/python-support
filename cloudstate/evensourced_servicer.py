@@ -85,7 +85,7 @@ class CloudStateEventSourcedServicer(EventSourcedServicer):
                     result = handler.handle_command(current_state,cmd,ctx)
                 except Exception as ex:
                     ctx.fail(str(ex))
-                    logging.error('Failed to execute command:'+str(ex))
+                    logging.exception('Failed to execute command:'+str(ex))
 
                 client_action = ctx.create_client_action(result, False)
                 event_sourced_reply = EventSourcedReply()
