@@ -13,7 +13,7 @@ from shoppingcart.shoppingcart_pb2 import (_SHOPPINGCART, DESCRIPTOR as FILE_DES
 @dataclass
 class ShoppingCartState:
     entity_id: str
-    cart: MutableMapping[str, LineItem] = field(default_factory=map)
+    cart: MutableMapping[str, LineItem] = field(default_factory=dict)
 
 
 def init(entity_id: str) -> ShoppingCartState:
