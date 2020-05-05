@@ -13,7 +13,7 @@ from shoppingcart.shoppingcart_pb2 import (_SHOPPINGCART, DESCRIPTOR as FILE_DES
 @dataclass
 class ShoppingCartState:
     entity_id: str
-    cart: MutableMapping[str, LineItem] = field(default_factory=map)
+    cart: MutableMapping[str, LineItem] = field(default_factory=dict)
 
 
 def init(entity_id: str) -> ShoppingCartState:
@@ -25,7 +25,7 @@ entity = EventSourcedEntity(_SHOPPINGCART, [FILE_DESCRIPTOR], init)
 
 def to_domain_line_item(item):
     domain_item = DomainLineItem()
-    domain_item.productId = item.productId
+    domain_item.productId = item.product_id
     domain_item.name = item.name
     domain_item.quantity = item.quantity
     return domain_item
@@ -40,7 +40,7 @@ def snapshot(state: ShoppingCartState):
 
 def to_line_item(domain_item):
     item = LineItem()
-    item.productId = domain_item.productId
+    item.product_id = domain_item.productId
     item.name = domain_item.name
     item.quantity = domain_item.quantity
     return item
@@ -59,7 +59,7 @@ def item_added(state: ShoppingCartState, event: ItemAdded):
         item.quantity = item.quantity + event.item.quantity
     else:
         item = to_line_item(event.item)
-        cart[item.productId] = item
+        cart[item.product_id] = item
 
 
 @entity.event_handler(ItemRemoved)
@@ -70,7 +70,7 @@ def item_removed(state: ShoppingCartState, event: ItemRemoved):
 @entity.command_handler("GetCart")
 def get_cart(state: ShoppingCartState):
     cart = Cart()
-    cart.items = state.cart.values()
+    cart.items.extend(state.cart.values())
     return cart
 
 
@@ -80,7 +80,7 @@ def add_item(item: AddLineItem, ctx: EventSourcedCommandContext):
         ctx.fail("Cannot add negative quantity of to item {}".format(item.productId))
     else:
         item_added_event = ItemAdded()
-        item_added_event.item = to_domain_line_item(item)
+        item_added_event.item.CopyFrom(to_domain_line_item(item))
         ctx.emit(item_added_event)
     return Empty()
 
@@ -88,10 +88,10 @@ def add_item(item: AddLineItem, ctx: EventSourcedCommandContext):
 @entity.command_handler("RemoveItem")
 def remove_item(state: ShoppingCartState, item: RemoveLineItem, ctx: EventSourcedCommandContext):
     cart = state.cart
-    if item.productId not in cart:
+    if item.product_id not in cart:
         ctx.fail("Cannot remove item {} because it is not in the cart.".format(item.productId))
     else:
         item_removed_event = ItemRemoved()
-        item_removed_event.productId = item.productId
+        item_removed_event.productId = item.product_id
         ctx.emit(item_removed_event)
     return Empty()
