@@ -22,11 +22,11 @@ class CloudState:
         self.event_sourced_entities.append(entity)
         return self
 
-    def serve(self):
+    def start(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         add_EntityDiscoveryServicer_to_server(CloudStateEntityDiscoveryServicer(self.event_sourced_entities), server)
         add_EventSourcedServicer_to_server(CloudStateEventSourcedServicer(self.event_sourced_entities),server)
-        port = os.environ.get('HOST', '127.0.0.1') + ':' + os.environ.get('PORT', '50051')
+        port = os.environ.get('HOST', '127.0.0.1') + ':' + os.environ.get('PORT', '8080')
         server.add_insecure_port(port)
         pprint('Starting CloudStateEntityDiscoveryServicer on ' + port)
         server.start()
