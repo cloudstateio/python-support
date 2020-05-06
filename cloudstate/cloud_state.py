@@ -28,6 +28,6 @@ class CloudState:
         add_EventSourcedServicer_to_server(CloudStateEventSourcedServicer(self.event_sourced_entities),server)
         port = os.environ.get('HOST', '127.0.0.1') + ':' + os.environ.get('PORT', '8080')
         server.add_insecure_port(port)
-        pprint('Starting CloudState on ' + port)
+        pprint('Starting Cloudstate on ' + port)
         server.start()
         server.wait_for_termination()
