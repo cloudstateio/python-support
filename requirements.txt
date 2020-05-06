@@ -1,5 +1,4 @@
 attrs==19.3.0
-dataclasses==0.7
 grpcio==1.28.1
 grpcio-tools==1.28.1
 importlib-metadata==1.6.0
