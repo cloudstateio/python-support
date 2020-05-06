@@ -1,5 +1,6 @@
 # Python User Language Support
-[![Build Status](https://travis-ci.com/marcellanz/cloudstate_python-support.svg?branch=feature%2Fpython-support)](https://travis-ci.com/github/marcellanz/cloudstate_python-support) 
+[![Build Status](https://travis-ci.com/marcellanz/cloudstate_python-support.svg?branch=feature%2Fpython-support)](https://travis-ci.com/github/marcellanz/cloudstate_python-support)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/marcellanz/cloudstate_python-support.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/marcellanz/cloudstate_python-support/alerts/) 
 
 This repository is an initial setup to get Python Support for [Cloudstate](https://github.com/cloudstateio/cloudstate) implemented.
 
