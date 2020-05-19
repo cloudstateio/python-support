@@ -1,4 +1,4 @@
-from cloudstate.cloud_state import CloudState
+from cloudstate.cloudstate import CloudState
 from shoppingcart.shopping_cart_entity import entity as shopping_cart_entity
 import logging
 
