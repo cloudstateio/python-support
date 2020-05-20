@@ -13,7 +13,8 @@ Cloning into 'python-support'...
 > python --version     
 Python 3.7.3
 > pip --version 
-> pip install -r requirements.txt
+> pip install wheel
+> pip install .
 ```
 
 ### generate installer
