@@ -1,3 +1,8 @@
+"""
+Copyright 2020 Lightbend Inc.
+Licensed under the Apache License, Version 2.0.
+"""
+
 from setuptools import setup, find_packages
 
 # Load version in cloudstate package.
