@@ -1,10 +1,10 @@
 FROM python:3.8.0-slim
 
 COPY . /app
-RUN apt-get update \
-    && apt-get install gcc -y \
-    && apt-get clean
+WORKDIR /app
+RUN pip install --user -r requirements.txt && \
+    pip install wheel && \
+    python setup.py bdist_wheel && \
+    pip install dist/cloudstate-0.5.0-py3-none-any.whl
 
-WORKDIR app
-RUN pip install --user -r requirements.txt
 ENTRYPOINT python shopping_cart.py
