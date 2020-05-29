@@ -1,3 +1,8 @@
+"""
+Copyright 2020 Lightbend Inc.
+Licensed under the Apache License, Version 2.0.
+"""
+
 from dataclasses import dataclass, field
 from typing import List, Callable, Any, Mapping, MutableMapping
 import inspect

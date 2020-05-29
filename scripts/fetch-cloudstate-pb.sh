@@ -14,7 +14,7 @@ function fetch() {
 
 tag=$1
 
-# CloudState protocol
+# Cloudstate protocol
 fetch "protocol/cloudstate/entity.proto" $tag
 fetch "protocol/cloudstate/event_sourced.proto" $tag
 fetch "protocol/cloudstate/function.proto" $tag
@@ -24,7 +24,7 @@ fetch "protocol/cloudstate/crdt.proto" $tag
 fetch "example/shoppingcart/shoppingcart.proto" $tag
 fetch "example/shoppingcart/persistence/domain.proto" $tag
 
-# CloudState frontend
+# Cloudstate frontend
 fetch "frontend/cloudstate/entity_key.proto" $tag
 
 # dependencies

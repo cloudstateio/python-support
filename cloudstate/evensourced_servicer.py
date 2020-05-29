@@ -1,6 +1,13 @@
-from dataclasses import dataclass
+"""
+Copyright 2020 Lightbend Inc.
+Licensed under the Apache License, Version 2.0.
+"""
+
+import logging
+from pprint import pprint
 from typing import List
 
+from google.protobuf import symbol_database as _symbol_database
 from google.protobuf.any_pb2 import Any
 
 from cloudstate.entity_pb2 import Command
@@ -9,9 +16,6 @@ from cloudstate.event_sourced_entity import EventSourcedEntity, EventSourcedHand
 from cloudstate.event_sourced_pb2 import EventSourcedInit, EventSourcedSnapshot, EventSourcedEvent, EventSourcedReply, \
     EventSourcedStreamOut
 from cloudstate.event_sourced_pb2_grpc import EventSourcedServicer
-from pprint import pprint
-from google.protobuf import symbol_database as _symbol_database
-import logging
 
 _sym_db = _symbol_database.Default()
 
