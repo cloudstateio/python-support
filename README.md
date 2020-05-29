@@ -19,10 +19,10 @@ Python 3.7.3
 
 ### generate installer
 ```
-./venv/bin/python3 setup.py bdist_wheel
+python setup.py bdist_wheel
 ```
 
 ### local install
 ```
-./venv/bin/python3 -m pip install dist/cloudstate-0.5.0-py3-none-any.whl
+python -m pip install dist/cloudstate-0.1.0-py3-none-any.whl
 ```
