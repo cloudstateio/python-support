@@ -1,3 +1,8 @@
+"""
+Copyright 2020 Lightbend Inc.
+Licensed under the Apache License, Version 2.0.
+"""
+
 from dataclasses import (dataclass, field)
 from typing import List
 import os
@@ -25,7 +30,7 @@ class CloudState:
     def start(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         add_EntityDiscoveryServicer_to_server(CloudStateEntityDiscoveryServicer(self.event_sourced_entities), server)
-        add_EventSourcedServicer_to_server(CloudStateEventSourcedServicer(self.event_sourced_entities),server)
+        add_EventSourcedServicer_to_server(CloudStateEventSourcedServicer(self.event_sourced_entities), server)
         port = os.environ.get('HOST', '127.0.0.1') + ':' + os.environ.get('PORT', '8080')
         server.add_insecure_port(port)
         pprint('Starting Cloudstate on ' + port)
