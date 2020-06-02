@@ -1,13 +1,35 @@
 language: python
+
 python:
   - "3.8"
-install:
-  - pip install -r requirements.txt
-script: pytest
-deploy:
-  provider: pypi
-  username: "__token__"
-  password:
-    secure: "wHyj8a0t6Ub4BmJYSwDQO5wJphX3Wz55bDAlWrb4KaJGD4XzjFs5VWDqgZRAJ6JSM8WF9xQqVPxniXRpyBO41VDNGkyT5ytf0yohnw6kud/xwm8+y5BbJ1ZxmGmpxoJumc1R/tJNABlabLEvSr10OtuMnR7kW5d4WCBR/baugr8sCEXnNLDdxNOnCZhC36cm+yWRIi8ih8eUhkbJRLb/KQO1PDrHEf7V35PwLktSkhWkjr0mtSvbthPPn6hmH2PV+OnMD102oYbDO2eGWr8nhHAPcfXaDQgdBy9WQ20SgZqNmZc6LIwNV6MWdCV/BSk4sLithT/r5aZcL99fzxy+PFmJdbxJibPEqJyf8DVSQa9Pa2ndjNXnHJuqeEh4Xdcp90z1aRGEr988P/llFFnq8pDXCapAvdGeALh3IdANhTYJcQtZfcJ0D/aAnq0le8X5i4X39aPazbR4VPXDoDiFCPqxy5MJ2Y3skqX9dyXsKuqUMlfpfUsEnhW5RbnSCA53BYw9FoykLA9tvFtjnxywwHo1iFfDdhXU0z7L/bE5dlafct1WST6cnDHaqew8ew03OE3Z2DTBiV/aNDON2JvqgnqT4JW3T3xDUYR7pKbzEnVGq8oGS9nmxLU4ciXad7dRtrwb92Wv2Jbs4wkeLFCmoDhshtT7KEDANTxBS4tAk50="
-  on:
-    tags: true  
+
+jobs:
+  include:
+
+  - stage: build
+    install:
+      - pip install -r requirements.txt
+    script: pytest
+    deploy:
+      provider: pypi
+      username: "__token__"
+      password:
+        secure: "wHyj8a0t6Ub4BmJYSwDQO5wJphX3Wz55bDAlWrb4KaJGD4XzjFs5VWDqgZRAJ6JSM8WF9xQqVPxniXRpyBO41VDNGkyT5ytf0yohnw6kud/xwm8+y5BbJ1ZxmGmpxoJumc1R/tJNABlabLEvSr10OtuMnR7kW5d4WCBR/baugr8sCEXnNLDdxNOnCZhC36cm+yWRIi8ih8eUhkbJRLb/KQO1PDrHEf7V35PwLktSkhWkjr0mtSvbthPPn6hmH2PV+OnMD102oYbDO2eGWr8nhHAPcfXaDQgdBy9WQ20SgZqNmZc6LIwNV6MWdCV/BSk4sLithT/r5aZcL99fzxy+PFmJdbxJibPEqJyf8DVSQa9Pa2ndjNXnHJuqeEh4Xdcp90z1aRGEr988P/llFFnq8pDXCapAvdGeALh3IdANhTYJcQtZfcJ0D/aAnq0le8X5i4X39aPazbR4VPXDoDiFCPqxy5MJ2Y3skqX9dyXsKuqUMlfpfUsEnhW5RbnSCA53BYw9FoykLA9tvFtjnxywwHo1iFfDdhXU0z7L/bE5dlafct1WST6cnDHaqew8ew03OE3Z2DTBiV/aNDON2JvqgnqT4JW3T3xDUYR7pKbzEnVGq8oGS9nmxLU4ciXad7dRtrwb92Wv2Jbs4wkeLFCmoDhshtT7KEDANTxBS4tAk50="
+      on:
+        tags: true
+
+  - stage: deploy docs
+    name: deploy release docs to cloudstate.io
+    if: tag =~ ^v
+    language: scala
+    script: cd docs && sbt deploy
+  - stage: deploy docs
+    name: deploy snapshot docs to cloudstate.io
+    if: branch = master AND type = push
+    language: scala
+    script: cd docs && sbt deploy
+
+env:
+  global:
+    # encrypted with: travis encrypt --pro -r cloudstateio/python-support DEPLOY_DOCS_TOKEN=<token>
+    secure: "lALDa5xUg8uUAoxmn1XxwycRa+xp1IcohMuk+1i+GKI7BX60SI8ueHo+FZU3H+PF53CjtxA1UefsAFwz8smtWiePWbqalbLVMx7N2bt7tLjA/lhQC2+vEZu3LPMYGkxE/XwQ5Zr9KLgoci33USu3R6mxBgg3EbcVSSkOyBhGgH2VMIxktPf5Ae64khlhKJtkBlPgktuKytR6bESFMtdQ2v+wXQm0gQgTq85OhMc0hyixSO3JIshfEXd9Ywkfjj7j1njba/yb19tVeKh9GZh+PFLFp84CJwPE2R0ZoWGYMACsRwUQNmLaFb9y+GjTryanYlzbz8FGOVeL3INw7cDJriLopSYGEssiNGSZQh2U8+01N79VohzzBR+XSx/uw8Gly7C51rI7wFs0VbkUtPGFSbAcDGK6OqQ2fFsL1qwYIU+uLWpt2dtcxtbRsDpE3GL//8jUGLE6r6ov0b0W262PNbrmCaFdm9JzhjaypjvjMNBebmi4ezm8RS22lRT5wykJOzuifBTubgsSx7K2TIuTQrGv7zTOjnWoaSUy8nLiAuFp/WmCRQEaAZ9LXzLigzrnI+LtwPDnwvNP5xF+jmRnGxk27pFipDKmZZW/IXFR0uij14U7ewIFAWWtl/g2Fyi47JMXMLwR1IdBJ3QBZBlP+EX4SUvwg8YR1qUGRQbxXDs="
