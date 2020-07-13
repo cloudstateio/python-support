@@ -93,7 +93,7 @@ service ShoppingCart {
 
 ```
 
-2. Generate Python files
+### 2. Generate Python files
 
 It is necessary to compile your .proto files using the protoc compiler in order to generate Python files. 
 See [this official gRPC for Python quickstart](https://grpc.io/docs/languages/python/quickstart/) if you are not familiar with the gRPC protocol.
