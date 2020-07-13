@@ -103,7 +103,7 @@ Here is an example of how to compile the sample proto file:
 python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/shoppingcart.proto
 ```
 
-3. Implement your business logic under an EventSourced Cloudstate Entity
+### 3. Implement your business logic under an EventSourced Cloudstate Entity
 
 ```
 from dataclasses import dataclass, field
