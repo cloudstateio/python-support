@@ -217,7 +217,7 @@ if __name__ == '__main__':
     CloudState().register_event_sourced_entity(shopping_cart_entity).start()
 ```
 
-5. Deployment
+### 5. Deployment
 
 Cloudstate runs on Docker and Kubernetes you need to package your application so that it works as a Docker container 
 and can deploy it together with Cloudstate Operator on Kubernetes, the details and examples of all of which can be found [here](https://code.visualstudio.com/docs/containers/quickstart-python), [here](https://github.com/cloudstateio/python-support/blob/master/shoppingcart/Dockerfile) and [here](https://cloudstate.io/docs/core/current/user/deployment/index.html).
