@@ -1,4 +1,3 @@
-# Project description
 
 Cloudstate is a specification, protocol, and reference implementation for providing distributed state management patterns suitable for **Serverless** computing. 
 The current supported and envisioned patterns include:
@@ -224,13 +223,13 @@ and can deploy it together with Cloudstate Operator on Kubernetes, the details a
 
 ## Contributing
 
-For guidance on setting up a development environment and how to make a contribution to Cloudastate, 
+For guidance on setting up a development environment and how to make a contribution to Cloudstate, 
 see the contributing [project page](https://github.com/cloudstateio/python-support) or consult an official documentation [here](https://cloudstate.io/docs/).
 
 ## Links
 
-* [Website:](https://cloudstate.io/)
-* [Documentation:](https://cloudstate.io/docs/)
-* [Releases:](https://pypi.org/project/cloudstate/)
-* [Code:](https://github.com/cloudstateio/python-support)
-* [Issue tracker:](https://github.com/cloudstateio/python-support/issues)
+* [Website](https://cloudstate.io/)
+* [Documentation](https://cloudstate.io/docs/)
+* [Releases](https://pypi.org/project/cloudstate/)
+* [Code](https://github.com/cloudstateio/python-support)
+* [Issue tracker](https://github.com/cloudstateio/python-support/issues)
