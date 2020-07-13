@@ -16,7 +16,7 @@ or it is envisioned that it will be integrated with other Serverless technologie
 
 Read more about the design, architecture, techniques, and technologies behind Cloudstate in [this section in the documentation](https://github.com/cloudstateio/cloudstate/blob/master/README.md#enter-cloudstate). 
 
-Cloudstate Python user language support is a library that implements the Cloudstate protocol and offers an elegant Python API 
+The Cloudstate Python user language support is a library that implements the Cloudstate protocol and offers an elegant Python API 
 for writing entities that implement the types supported by the Cloudstate protocol.
 
 Cloudstate documentation can be found [here](https://cloudstate.io/docs/)
