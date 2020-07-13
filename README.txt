@@ -29,7 +29,7 @@ pip install -U cloudstate
 
 ## A Simple EventSourced Example:
 
-1. Define your gRPC contract
+### 1. Define your gRPC contract
 
 ```
 // This is the public API offered by the shopping cart entity.
