@@ -12,7 +12,7 @@ The current supported and envisioned patterns include:
 Cloudstate is polyglot, which means that services can be written in any language that supports gRPC, 
 and with language specific libraries provided that allow idiomatic use of the patterns in each language. 
 Cloudstate can be used either by itself, in combination with a Service Mesh, 
-or it is in envisioned that it will be integrated with other Serverless technologies such as [Knative](https://knative.dev/).
+or it is envisioned that it will be integrated with other Serverless technologies such as [Knative](https://knative.dev/).
 
 Read more about the design, architecture, techniques, and technologies behind Cloudstate in [this section in the documentation](https://github.com/cloudstateio/cloudstate/blob/master/README.md#enter-cloudstate). 
 
@@ -234,4 +234,3 @@ see the contributing [project page](https://github.com/cloudstateio/python-suppo
 * [Releases:](https://pypi.org/project/cloudstate/)
 * [Code:](https://github.com/cloudstateio/python-support)
 * [Issue tracker:](https://github.com/cloudstateio/python-support/issues)
-
