@@ -205,7 +205,7 @@ def remove_item(state: ShoppingCartState, item: RemoveLineItem, ctx: EventSource
     return Empty()
 ```
 
-4. Register Entity
+### 4. Register Entity
 
 ```
 from cloudstate.cloudstate import CloudState
