@@ -223,7 +223,7 @@ and can deploy it together with Cloudstate Operator on Kubernetes, the details a
 
 ## Contributing
 
-For guidance on setting up a development environment and how to make a contribution to Cloudastate, 
+For guidance on setting up a development environment and how to make a contribution to Cloudstate, 
 see the contributing [project page](https://github.com/cloudstateio/python-support) or consult an official documentation [here](https://cloudstate.io/docs/).
 
 ## Links
