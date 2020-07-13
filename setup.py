@@ -18,6 +18,6 @@ setup(name=name,
       license='Apache 2.0',
       description='Cloudstate Python Support Library',
       packages=find_packages(exclude=['tests', 'shoppingcart']),
-      long_description=open('README.md', 'r').read(),
+      long_description=open('Description.md', 'r').read(),
       long_description_content_type='text/markdown',
       zip_safe=False)
