@@ -19,7 +19,7 @@ Read more about the design, architecture, techniques, and technologies behind Cl
 The Cloudstate Python user language support is a library that implements the Cloudstate protocol and offers an elegant Python API 
 for writing entities that implement the types supported by the Cloudstate protocol.
 
-Cloudstate documentation can be found [here](https://cloudstate.io/docs/)
+The Cloudstate documentation can be found [here](https://cloudstate.io/docs/)
 
 ## Install and update using pip:
 
