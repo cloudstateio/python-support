@@ -1,0 +1,22 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+package com.example.functiondemo2;
+
+message FunctionRequest2{
+    string foo = 1;
+}
+
+message FunctionResponse2{
+    string bar = 1;
+}
+
+service FunctionDemo2{
+    rpc ReverseString2(FunctionRequest2) returns (FunctionResponse2) {
+        option (google.api.http) = {
+            post: "/function_example2/reverse_string2",
+            body: "*",
+        };
+    }
+}

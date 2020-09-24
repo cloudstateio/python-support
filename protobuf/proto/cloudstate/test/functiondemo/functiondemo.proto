@@ -1,0 +1,36 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+package com.example.functiondemo;
+
+message FunctionRequest{
+    string foo = 1;
+}
+
+message FunctionResponse{
+    string bar = 1;
+}
+
+message AddToSum{
+    float quantity = 1;
+}
+message SumTotal{
+    float total = 1;
+}
+
+service FunctionDemo{
+    rpc ReverseString(FunctionRequest) returns (FunctionResponse) {
+        option (google.api.http) = {
+            post: "/function_example/reverse_string",
+            body: "*",
+        };
+    }
+
+    rpc ReverseStrings(stream FunctionRequest) returns (stream FunctionResponse) {
+    }
+    rpc SumStream(stream AddToSum) returns (SumTotal) {
+    }
+    rpc SillyLetterStream(FunctionRequest) returns (stream FunctionResponse) {
+    }
+}

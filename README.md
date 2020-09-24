@@ -24,5 +24,10 @@ python setup.py bdist_wheel
 
 ### local install
 ```
-python -m pip install dist/cloudstate-0.1.0-py3-none-any.whl
+python -m pip install dist/cloudstate-<the version>-py3-none-any.whl
+```
+
+### build and run tck, including provisional tests for stateless functions. 
+```
+./extended_tck.sh
 ```

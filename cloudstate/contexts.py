@@ -3,14 +3,14 @@ Copyright 2020 Lightbend Inc.
 Licensed under the Apache License, Version 2.0.
 """
 
-from dataclasses import dataclass, field
 from typing import List
 
-from cloudstate.entity_pb2 import ClientAction, Failure, Reply, Forward, SideEffect
+from cloudstate.entity_pb2 import ClientAction, Failure, Forward, Reply, SideEffect
 
 
 class Context:
     """Root class of all contexts."""
+
     pass
 
 
@@ -18,10 +18,10 @@ class ClientActionContext(Context):
     """Context that provides client actions, which include failing and forwarding.
     These contexts are typically made available in response to commands."""
 
-    def __init__(self,command_id: int):
+    def __init__(self, command_id: int):
         self.command_id: int = command_id
         self.errors: List[str] = []
-        self.effects:List[SideEffect] = []
+        self.effects: List[SideEffect] = []
         self.forward: Forward = None
 
     def fail(self, error_message: str):
@@ -38,9 +38,15 @@ class ClientActionContext(Context):
             failure.command_id = self.command_id
             failure.description = str(self.errors)
             client_action.failure.CopyFrom(failure)
+
+            return client_action
+
         elif result:
             if self.forward:
-                raise Exception("Both a reply was returned, and a forward message was sent, choose one or the other.")
+                raise Exception(
+                    "Both a reply was returned, and a forward message was sent, "
+                    "choose one or the other."
+                )
             else:
                 reply = Reply()
                 reply.payload.Pack(result)

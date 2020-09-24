@@ -26,8 +26,10 @@ fetch "example/shoppingcart/persistence/domain.proto" $tag
 
 # Cloudstate frontend
 fetch "frontend/cloudstate/entity_key.proto" $tag
+fetch "frontend/cloudstate/eventing.proto" $tag
 
 # dependencies
-fetch "proxy/grpc/reflection/v1alpha/reflection.proto" $tag
+#fetch "proxy/grpc/reflection/v1alpha/reflection.proto" $tag
 fetch "frontend/google/api/annotations.proto" $tag
 fetch "frontend/google/api/http.proto" $tag
+fetch "frontend/google/api/httpbody.proto" $tag
