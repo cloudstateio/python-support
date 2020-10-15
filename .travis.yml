@@ -24,16 +24,12 @@ jobs:
       on:
         tags: true
 
+  - stage: validate docs
+    script: make -C docs
+
   - stage: deploy docs
-    name: deploy release docs to cloudstate.io
     if: tag =~ ^v
-    language: scala
-    script: cd docs && sbt deploy
-  - stage: deploy docs
-    name: deploy snapshot docs to cloudstate.io
-    if: branch = master AND type = push
-    language: scala
-    script: cd docs && sbt deploy
+    script: make -C docs deploy
 
 env:
   global:
