@@ -1,0 +1,12 @@
+= Getting started
+
+include::partial$attributes.adoc[]
+
+Install the current version:
+
+[source,sh,subs="attributes+"]
+----
+pip install cloudstate=={cloudstate-python-version}
+----
+
+See the https://pypi.org/project/cloudstate/[Cloudstate project on PyPI] for more information.
