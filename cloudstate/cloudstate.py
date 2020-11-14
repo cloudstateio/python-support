@@ -11,14 +11,16 @@ from typing import List, Optional
 
 import grpc
 
+from cloudstate.action_pb2_grpc import add_ActionProtocolServicer_to_server
+from cloudstate.action_protocol_entity import Action
+from cloudstate.action_servicer import CloudStateActionProtocolServicer
 from cloudstate.discovery_servicer import CloudStateEntityDiscoveryServicer
 from cloudstate.entity_pb2_grpc import add_EntityDiscoveryServicer_to_server
 from cloudstate.event_sourced_entity import EventSourcedEntity
 from cloudstate.event_sourced_pb2_grpc import add_EventSourcedServicer_to_server
 from cloudstate.eventsourced_servicer import CloudStateEventSourcedServicer
-from cloudstate.function_pb2_grpc import add_StatelessFunctionServicer_to_server
-from cloudstate.function_servicer import CloudStateStatelessFunctionServicer
-from cloudstate.stateless_function_entity import StatelessFunction
+
+# from grpc_reflection.v1alpha import reflection
 
 
 @dataclass
@@ -34,7 +36,7 @@ class CloudState:
     __port = "8080"
     __workers = multiprocessing.cpu_count()
     __event_sourced_entities: List[EventSourcedEntity] = field(default_factory=list)
-    __stateless_function_entities: List[StatelessFunction] = field(default_factory=list)
+    __action_protocol_entities: List[Action] = field(default_factory=list)
 
     def host(self, address: str):
         """Set the address of the network Host.
@@ -62,9 +64,9 @@ class CloudState:
         self.__event_sourced_entities.append(entity)
         return self
 
-    def register_stateless_function_entity(self, entity: StatelessFunction):
+    def register_action_entity(self, entity: Action):
         """Registry the user Stateless Function entity."""
-        self.__stateless_function_entities.append(entity)
+        self.__action_protocol_entities.append(entity)
         return self
 
     def start(self):
@@ -79,17 +81,18 @@ class CloudState:
         # event sourced
         add_EntityDiscoveryServicer_to_server(
             CloudStateEntityDiscoveryServicer(
-                self.__event_sourced_entities, self.__stateless_function_entities
+                self.__event_sourced_entities, self.__action_protocol_entities
             ),
             server,
         )
         add_EventSourcedServicer_to_server(
             CloudStateEventSourcedServicer(self.__event_sourced_entities), server
         )
-        add_StatelessFunctionServicer_to_server(
-            CloudStateStatelessFunctionServicer(self.__stateless_function_entities),
+        add_ActionProtocolServicer_to_server(
+            CloudStateActionProtocolServicer(self.__action_protocol_entities),
             server,
         )
+
         logging.info("Starting Cloudstate on address %s", self.__address)
         try:
             server.add_insecure_port(self.__address)

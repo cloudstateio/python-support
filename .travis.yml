@@ -11,6 +11,10 @@ services:
 jobs:
   include:
 
+  - stage: codestyle
+    install:
+      - pip install flake8-black
+    script: flake8
   - stage: build
     install:
       - pip install -r requirements.txt

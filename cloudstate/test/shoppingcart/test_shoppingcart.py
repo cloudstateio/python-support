@@ -39,9 +39,9 @@ def test_shoppingcart():
     import docker
 
     client = docker.from_env()
-    # client.images.pull('cloudstateio/cloudstate-proxy-dev-mode:0.5.1-98-a596eae7')
+    client.images.pull("cloudstateio/cloudstate-proxy-dev-mode:latest")
     container = client.containers.run(
-        "cloudstateio/cloudstate-proxy-dev-mode:0.5.1-98-a596eae7",
+        "cloudstateio/cloudstate-proxy-dev-mode:latest",
         environment={"USER_FUNCTION_HOST": "127.0.0.1", "USER_FUNCTION_PORT": "8081"},
         detach=True,
         ports={"9000/tcp": 9000},

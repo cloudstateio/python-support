@@ -10,12 +10,12 @@ from typing import Callable, List, MutableMapping
 
 from google.protobuf import descriptor as _descriptor
 
-from cloudstate.function_pb2 import _STATELESSFUNCTION
-from cloudstate.stateless_function_context import StatelessFunctionContext
+from cloudstate.action_context import ActionContext
+from cloudstate.action_pb2 import _ACTIONPROTOCOL
 
 
 @dataclass
-class StatelessFunction:
+class Action:
     service_descriptor: _descriptor.ServiceDescriptor
     file_descriptors: List[_descriptor.FileDescriptor]
     unary_handlers: MutableMapping[str, Callable] = field(default_factory=dict)
@@ -28,7 +28,7 @@ class StatelessFunction:
         return self.name()
 
     def entity_type(self):
-        return _STATELESSFUNCTION.full_name
+        return _ACTIONPROTOCOL.full_name
 
     def unary_handler(self, name: str):
         def register_unary_handler(function):
@@ -141,12 +141,12 @@ def invoke(function, parameters):
     return function(*ordered_parameters)
 
 
-class StatelessFunctionHandler:
-    def __init__(self, function: StatelessFunction):
-        self.function: StatelessFunction = function
-        self.logger = logging.getLogger(f"StatelessFunctionHandler {function.name()}")
+class ActionHandler:
+    def __init__(self, function: Action):
+        self.function: Action = function
+        self.logger = logging.getLogger(f"ActionHandler {function.name()}")
 
-    def handle_unary(self, command, ctx: StatelessFunctionContext):
+    def handle_unary(self, command, ctx: ActionContext):
         if ctx.command_name not in self.function.unary_handlers:
             raise Exception(
                 "Missing command handler function for entity {} and command {}".format(
@@ -155,7 +155,7 @@ class StatelessFunctionHandler:
             )
         return invoke(self.function.unary_handlers[ctx.command_name], [command, ctx])
 
-    def handle_stream(self, command, ctx: StatelessFunctionContext):
+    def handle_stream(self, command, ctx: ActionContext):
         self.logger.info(f"handling stream: {command} {ctx}")
         if ctx.command_name not in self.function.stream_handlers:
             raise Exception(
@@ -165,7 +165,7 @@ class StatelessFunctionHandler:
             )
         return invoke(self.function.stream_handlers[ctx.command_name], [command, ctx])
 
-    def handle_stream_in(self, command, ctx: StatelessFunctionContext):
+    def handle_stream_in(self, command, ctx: ActionContext):
         if ctx.command_name not in self.function.stream_in_handlers:
             raise Exception(
                 "Missing command handler function for entity {} and command {}".format(
@@ -176,7 +176,7 @@ class StatelessFunctionHandler:
             self.function.stream_in_handlers[ctx.command_name], [command, ctx]
         )
 
-    def handle_stream_out(self, command, ctx: StatelessFunctionContext):
+    def handle_stream_out(self, command, ctx: ActionContext):
         if ctx.command_name not in self.function.stream_out_handlers:
             raise Exception(
                 "Missing command handler function for entity {} and command {}".format(

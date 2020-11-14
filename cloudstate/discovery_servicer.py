@@ -14,9 +14,9 @@ from google.protobuf.descriptor_pool import Default
 from google.protobuf.empty_pb2 import Empty
 
 from cloudstate import entity_pb2
+from cloudstate.action_protocol_entity import Action
 from cloudstate.entity_pb2_grpc import EntityDiscoveryServicer
 from cloudstate.event_sourced_entity import EventSourcedEntity
-from cloudstate.stateless_function_entity import StatelessFunction
 
 logger = getLogger()
 
@@ -24,13 +24,13 @@ logger = getLogger()
 @dataclass
 class CloudStateEntityDiscoveryServicer(EntityDiscoveryServicer):
     event_sourced_entities: List[EventSourcedEntity]
-    stateless_function_entities: List[StatelessFunction]
+    action_protocol_entities: List[Action]
 
     def discover(self, request, context):
         logger.info("discovering.")
         pprint(request)
         descriptor_set = FileDescriptorSet()
-        for entity in self.event_sourced_entities + self.stateless_function_entities:
+        for entity in self.event_sourced_entities + self.action_protocol_entities:
             logger.info(f"entity: {entity.name()}")
             for descriptor in entity.file_descriptors:
                 logger.info(f"discovering {descriptor.name}")
@@ -101,7 +101,7 @@ class CloudStateEntityDiscoveryServicer(EntityDiscoveryServicer):
                     persistence_id=entity.persistence_id,
                 )
                 for entity in self.event_sourced_entities
-                + self.stateless_function_entities
+                + self.action_protocol_entities
             ],
             proto=descriptor_set.SerializeToString(),
         )

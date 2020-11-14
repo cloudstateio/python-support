@@ -9,6 +9,6 @@ from cloudstate.test.shoppingcart.shopping_cart_entity import (
 )
 
 if __name__ == "__main__":
-    CloudState().port("8090").register_event_sourced_entity(
+    CloudState().port("8080").register_event_sourced_entity(
         shopping_cart_entity
     ).start()

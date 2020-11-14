@@ -6,7 +6,7 @@ Licensed under the Apache License, Version 2.0.
 import logging
 
 from cloudstate.cloudstate import CloudState
-from cloudstate.test.functiondemo.function_definition import definition, definition2
+from cloudstate.test.actiondemo.action_definition import definition, definition2
 from cloudstate.test.shoppingcart import shopping_cart_entity
 
 logger = logging.getLogger()
@@ -22,8 +22,8 @@ def run_test_server(
             shopping_cart_entity.entity
         )
     if run_function_demo:
-        logger.info("adding functiondemo service")
-        server_builder = server_builder.register_stateless_function_entity(definition)
-        server_builder = server_builder.register_stateless_function_entity(definition2)
+        logger.info("adding ActionDemo service")
+        server_builder = server_builder.register_action_entity(definition)
+        server_builder = server_builder.register_action_entity(definition2)
 
     return server_builder.start()

@@ -1,8 +1,7 @@
 attrs>=19.3.0
 google-api>=0.1.12
 googleapis-common-protos >= 1.51.0
-grpcio>=1.28.1
-grpcio-tools>=1.28.1
+grpcio-tools>=1.32.0
 pytest>=5.4.2
 six>=1.14.0
-grpcio-reflection>=1.28.1e
+grpcio-reflection>=1.32.0

@@ -2,7 +2,7 @@ syntax = "proto3";
 import "google/api/annotations.proto";
 import "google/api/http.proto";
 
-package com.example.functiondemo;
+package com.example.actiondemo;
 
 message FunctionRequest{
     string foo = 1;
@@ -19,7 +19,7 @@ message SumTotal{
     float total = 1;
 }
 
-service FunctionDemo{
+service ActionDemo{
     rpc ReverseString(FunctionRequest) returns (FunctionResponse) {
         option (google.api.http) = {
             post: "/function_example/reverse_string",

@@ -6,7 +6,7 @@ Licensed under the Apache License, Version 2.0.
 import sys
 from logging import getLogger
 
-from cloudstate.test.functiondemo.test_functiondemo import evaluate_functiondemo_server
+from cloudstate.test.actiondemo.test_actiondemo import evaluate_ActionDemo_server
 from cloudstate.test.run_test_server import run_test_server
 from cloudstate.test.shoppingcart.test_shoppingcart import evaluate_shoppingcart_server
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
         logger.info("starting server")
 
         run_test_server(
-            "shoppingcart" in sys.argv, "functiondemo" in sys.argv, port=8080
+            "shoppingcart" in sys.argv, "ActionDemo" in sys.argv, port=8080
         ).wait_for_termination()
     elif sys.argv[1] == "client":
         assert "server_host" in sys.argv
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
         if "shoppingcart" in sys.argv:
             evaluate_shoppingcart_server(server, server_port)
-        if "functiondemo" in sys.argv:
-            evaluate_functiondemo_server(server, server_port)
+        if "ActionDemo" in sys.argv:
+            evaluate_ActionDemo_server(server, server_port)
     else:
         raise Exception("please specify client or server.")

@@ -13,7 +13,7 @@ from cloudstate.entity_pb2 import Forward, SideEffect
 
 
 @dataclass
-class StatelessFunctionContext(ClientActionContext):
+class ActionContext(ClientActionContext):
     command_name: str
     errors: List[str] = field(default_factory=list)
     effects: List[SideEffect] = field(default_factory=list)
